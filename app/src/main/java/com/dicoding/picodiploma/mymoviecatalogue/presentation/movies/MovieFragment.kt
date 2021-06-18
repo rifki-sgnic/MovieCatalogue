@@ -15,7 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MovieFragment : Fragment() {
 
-    private lateinit var fragmentMovieBinding: FragmentMovieBinding
+    private var _fragmentMovieBinding: FragmentMovieBinding? = null
+    private val fragmentMovieBinding get() = _fragmentMovieBinding as FragmentMovieBinding
+
     private val movieViewModel: MovieViewModel by viewModels()
 
     override fun onCreateView(
@@ -23,7 +25,7 @@ class MovieFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        fragmentMovieBinding = FragmentMovieBinding.inflate(layoutInflater, container, false)
+        _fragmentMovieBinding = FragmentMovieBinding.inflate(layoutInflater, container, false)
         return fragmentMovieBinding.root
     }
 
@@ -51,7 +53,7 @@ class MovieFragment : Fragment() {
                     }
                 }
             })
-            with(fragmentMovieBinding.rvMovies) {
+            fragmentMovieBinding.rvMovies.apply {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 adapter = movieAdapter
@@ -65,5 +67,10 @@ class MovieFragment : Fragment() {
         } else {
             fragmentMovieBinding.progressBar.visibility = View.GONE
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _fragmentMovieBinding = null
     }
 }

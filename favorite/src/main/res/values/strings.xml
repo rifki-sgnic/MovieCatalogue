@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="add_favorite">Add some favorite here</string>
+    <string name="title_movie">Movies</string>
+    <string name="title_tv_shows">TV Shows</string>
 </resources>

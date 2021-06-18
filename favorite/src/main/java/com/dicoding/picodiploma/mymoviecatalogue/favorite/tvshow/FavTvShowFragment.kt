@@ -17,7 +17,8 @@ import javax.inject.Inject
 
 class FavTvShowFragment : Fragment() {
 
-    private lateinit var fragmentFavTvShowBinding: FragmentFavTvShowBinding
+    private var _fragmentFavTvShowBinding: FragmentFavTvShowBinding? = null
+    private val fragmentFavTvShowBinding get() = _fragmentFavTvShowBinding as FragmentFavTvShowBinding
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -28,7 +29,7 @@ class FavTvShowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        fragmentFavTvShowBinding =
+        _fragmentFavTvShowBinding =
             FragmentFavTvShowBinding.inflate(layoutInflater, container, false)
         return fragmentFavTvShowBinding.root
     }
@@ -67,5 +68,10 @@ class FavTvShowFragment : Fragment() {
                 adapter = favTvShowAdapter
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _fragmentFavTvShowBinding = null
     }
 }

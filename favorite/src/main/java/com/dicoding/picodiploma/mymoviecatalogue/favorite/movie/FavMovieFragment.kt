@@ -17,7 +17,8 @@ import javax.inject.Inject
 
 class FavMovieFragment : Fragment() {
 
-    private lateinit var fragmentFavMovieBinding: FragmentFavMovieBinding
+    private var _fragmentFavMovieBinding: FragmentFavMovieBinding? = null
+    private val fragmentFavMovieBinding get() = _fragmentFavMovieBinding as FragmentFavMovieBinding
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -28,7 +29,7 @@ class FavMovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        fragmentFavMovieBinding =
+        _fragmentFavMovieBinding =
             FragmentFavMovieBinding.inflate(layoutInflater, container, false)
         return fragmentFavMovieBinding.root
     }
@@ -67,5 +68,10 @@ class FavMovieFragment : Fragment() {
                 adapter = favMovieAdapter
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _fragmentFavMovieBinding = null
     }
 }

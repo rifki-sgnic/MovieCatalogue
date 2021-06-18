@@ -15,7 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TvShowFragment : Fragment() {
 
-    private lateinit var fragmentTvShowFragment: FragmentTvShowsBinding
+    private var _fragmentTvShowBinding: FragmentTvShowsBinding? = null
+    private val fragmentTvShowBinding get() = _fragmentTvShowBinding as FragmentTvShowsBinding
+
     private val tvShowViewModel: TvShowViewModel by viewModels()
 
     override fun onCreateView(
@@ -23,15 +25,14 @@ class TvShowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        fragmentTvShowFragment = FragmentTvShowsBinding.inflate(layoutInflater, container, false)
-        return fragmentTvShowFragment.root
+        _fragmentTvShowBinding = FragmentTvShowsBinding.inflate(layoutInflater, container, false)
+        return fragmentTvShowBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
             val tvShowAdapter = TvShowAdapter()
-            fragmentTvShowFragment.progressBar.visibility = View.VISIBLE
             tvShowViewModel.getTvShow.observe(viewLifecycleOwner, { tvShow ->
                 if (tvShow != null) {
                     when (tvShow) {
@@ -45,14 +46,14 @@ class TvShowFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             showLoading(false)
-                            fragmentTvShowFragment.empty.root.visibility = View.VISIBLE
-                            fragmentTvShowFragment.empty.tvError.text =
+                            fragmentTvShowBinding.empty.root.visibility = View.VISIBLE
+                            fragmentTvShowBinding.empty.tvError.text =
                                 tvShow.message ?: getString(R.string.error)
                         }
                     }
                 }
             })
-            with(fragmentTvShowFragment.rvTvShows) {
+            fragmentTvShowBinding.rvTvShows.apply {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 adapter = tvShowAdapter
@@ -62,9 +63,14 @@ class TvShowFragment : Fragment() {
 
     private fun showLoading(state: Boolean) {
         if (state) {
-            fragmentTvShowFragment.progressBar.visibility = View.VISIBLE
+            fragmentTvShowBinding.progressBar.visibility = View.VISIBLE
         } else {
-            fragmentTvShowFragment.progressBar.visibility = View.GONE
+            fragmentTvShowBinding.progressBar.visibility = View.GONE
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _fragmentTvShowBinding = null
     }
 }
