@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+    <string name="description">Description</string>
+    <string name="share_button">Share Button</string>
+    <string name="date_icon">Date Icon</string>
+</resources>

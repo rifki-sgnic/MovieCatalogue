@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dicoding.picodiploma.mymoviecatalogue">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:name=".presentation.di.BaseApplication"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyMovieCatalogue">
+        <activity android:name=".presentation.splashscreen.SplashActivity"
+            android:theme="@style/Theme.MyMovieCatalogue.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.detail.DetailActivity"
+            android:label="@string/title_activity_detail_tv_show"
+            android:theme="@style/Theme.MyMovieCatalogue.NoActionBar">
+        </activity>
+        <activity
+            android:name=".presentation.MainActivity"
+            android:label="@string/app_name" />
+    </application>
+
+</manifest>
