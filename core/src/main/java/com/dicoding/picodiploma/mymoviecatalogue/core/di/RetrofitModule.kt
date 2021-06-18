@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.mymoviecatalogue.core.di
 
+import com.dicoding.picodiploma.core.BuildConfig
 import com.dicoding.picodiploma.mymoviecatalogue.core.data.source.remote.network.ApiService
 import dagger.Module
 import dagger.Provides
@@ -30,7 +31,7 @@ object RetrofitModule {
     @Provides
     fun provideRetrofit(client: OkHttpClient): ApiService {
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
