@@ -7,16 +7,11 @@
     <string name="tv_shows">TV SHOWS</string>
     <string name="favorite">FAVORITE</string>
     <string name="title">Title</string>
-    <string name="title_activity_detail_movie">Detail Movie</string>
     <string name="date">Date</string>
     <string name="description">Description</string>
     <string name="overview">Overview</string>
     <string name="genre">Genre</string>
-    <string name="duration">Duration</string>
     <string name="title_activity_detail_tv_show">Detail Tv Show</string>
-    <string name="seasons">Seasons</string>
-    <string name="episodes">Episodes</string>
-    <string name="premiered">Premiered</string>
     <string name="release">Release Date :</string>
     <string name="splash_title">Movie Catalogue</string>
     <string name="poster">Poster</string>
