@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="180dp"
-        android:src="@drawable/splash_logo" />
+        android:src="@drawable/splash_logo"
+        android:contentDescription="@string/splash_screen" />
 
     <TextView
         android:id="@+id/tv_title"

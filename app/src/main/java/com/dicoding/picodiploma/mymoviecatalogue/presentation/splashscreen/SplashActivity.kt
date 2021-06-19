@@ -11,23 +11,24 @@ import com.dicoding.picodiploma.mymoviecatalogue.databinding.ActivitySplashBindi
 import com.dicoding.picodiploma.mymoviecatalogue.presentation.MainActivity
 
 class SplashActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySplashBinding
+    private var _binding: ActivitySplashBinding? = null
+    private val binding get() = _binding
     private val time: Long = 3000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        _binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         val anim = AnimationUtils.loadAnimation(this, R.anim.fade_in)
 
-        val logo = binding.ivLogo
-        val title = binding.tvTitle
+        val logo = binding?.ivLogo
+        val title = binding?.tvTitle
 
-        logo.startAnimation(anim)
-        title.startAnimation(anim)
+        logo?.startAnimation(anim)
+        title?.startAnimation(anim)
 
         Handler(mainLooper).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
@@ -35,5 +36,10 @@ class SplashActivity : AppCompatActivity() {
 
             finish()
         }, time)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

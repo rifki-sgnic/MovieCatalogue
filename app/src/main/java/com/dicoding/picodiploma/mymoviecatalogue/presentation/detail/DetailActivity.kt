@@ -18,34 +18,33 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
-    private val detailViewModel: DetailViewModel by viewModels()
-    private lateinit var detailContentBinding: ContentDetailBinding
-    private lateinit var binding: ActivityDetailBinding
-    private var isFavorite = false
+    private var _detailContentBinding: ContentDetailBinding? = null
+    private val detailContentBinding get() = _detailContentBinding
 
-    companion object {
-        const val EXTRA_FILM = "extra_film"
-        const val EXTRA_ID = "extra_id"
-    }
+    private var _binding: ActivityDetailBinding? = null
+    private val binding get() = _binding
+
+    private val detailViewModel: DetailViewModel by viewModels()
+    private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailBinding.inflate(layoutInflater)
-        detailContentBinding = binding.detailContent
+        _binding = ActivityDetailBinding.inflate(layoutInflater)
+        _detailContentBinding = binding?.detailContent
 
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding?.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.toolbar.setNavigationOnClickListener {
+        binding?.toolbar?.setNavigationOnClickListener {
             finish()
         }
 
         val extras = intent.extras
         if (extras != null) {
 
-            binding.progressBar.visibility = View.VISIBLE
+            binding?.progressBar?.visibility = View.VISIBLE
 
             val id = extras.getInt(EXTRA_ID, 0)
             when (extras.getInt(EXTRA_FILM)) {
@@ -53,15 +52,15 @@ class DetailActivity : AppCompatActivity() {
                     detailViewModel.setSelectedId(id)
                     detailViewModel.getMovie.observe(this, { movie ->
                         movie.data?.let { populateMovie(it) }
-                        binding.collapsingToolbar.title = movie.data?.title
-                        binding.progressBar.visibility = View.GONE
+                        binding?.collapsingToolbar?.title = movie.data?.title
+                        binding?.progressBar?.visibility = View.GONE
                         val state = movie.data?.isFavorite
                         if (state != null) {
                             isFavorite = state
                             setFavorite(isFavorite)
                         }
                     })
-                    binding.fabFav.setOnClickListener {
+                    binding?.fabFav?.setOnClickListener {
                         if (!isFavorite) {
                             detailViewModel.setMovieFavorite()
                             Toast.makeText(this, "Added to favorite", Toast.LENGTH_SHORT).show()
@@ -75,15 +74,15 @@ class DetailActivity : AppCompatActivity() {
                     detailViewModel.setSelectedId(id)
                     detailViewModel.getTvShow.observe(this, { tvShow ->
                         tvShow.data?.let { populateTvShow(it) }
-                        binding.collapsingToolbar.title = tvShow.data?.title
-                        binding.progressBar.visibility = View.GONE
+                        binding?.collapsingToolbar?.title = tvShow.data?.title
+                        binding?.progressBar?.visibility = View.GONE
                         val state = tvShow.data?.isFavorite
                         if (state != null) {
                             isFavorite = state
                             setFavorite(isFavorite)
                         }
                     })
-                    binding.fabFav.setOnClickListener {
+                    binding?.fabFav?.setOnClickListener {
                         if (!isFavorite) {
                             detailViewModel.setTvShowFavorite()
                             Toast.makeText(this, "Added to favorite", Toast.LENGTH_SHORT).show()
@@ -98,7 +97,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun populateMovie(movieEntity: Movie) {
-        detailContentBinding.apply {
+        detailContentBinding?.apply {
             textTitle.text = movieEntity.title
             if (movieEntity.tagline!!.isEmpty()) {
                 textTagline.text = "-"
@@ -118,11 +117,11 @@ class DetailActivity : AppCompatActivity() {
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
                     .error(R.drawable.ic_error)
             )
-            .into(binding.imagePoster)
+            .into(binding!!.imagePoster)
     }
 
     private fun populateTvShow(tvShowEntity: TvShow) {
-        detailContentBinding.apply {
+        detailContentBinding?.apply {
             textTitle.text = tvShowEntity.title
             if (tvShowEntity.tagline!!.isEmpty()) {
                 textTagline.text = "-"
@@ -142,14 +141,25 @@ class DetailActivity : AppCompatActivity() {
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
                     .error(R.drawable.ic_error)
             )
-            .into(binding.imagePoster)
+            .into(binding!!.imagePoster)
     }
 
     private fun setFavorite(state: Boolean) {
         if (!state) {
-            binding.fabFav.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            binding?.fabFav?.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         } else {
-            binding.fabFav.setImageResource(R.drawable.ic_baseline_favorite_24)
+            binding?.fabFav?.setImageResource(R.drawable.ic_baseline_favorite_24)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _detailContentBinding = null
+        _binding = null
+    }
+
+    companion object {
+        const val EXTRA_FILM = "extra_film"
+        const val EXTRA_ID = "extra_id"
     }
 }
