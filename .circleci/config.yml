@@ -32,6 +32,7 @@ jobs:
           destination: artifact-file
 
 workflows:
-  test:
+  build-and-test:
     jobs:
+      - build
       - vulnachecka/scan
