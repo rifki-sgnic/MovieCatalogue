@@ -13,15 +13,4 @@
         <dist:fusing dist:include="true" />
     </dist:module>
 
-    <application android:allowBackup="false">
-        <activity android:name="com.dicoding.picodiploma.mymoviecatalogue.presentation.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="mymoviecatalogue"
-                    android:host="favorite" />
-            </intent-filter>
-        </activity>
-    </application>
-
 </manifest>
