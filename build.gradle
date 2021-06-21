@@ -53,4 +53,6 @@ ext {
     glideVersion = '4.12.0'
 
     nav_version = "2.3.5"
+    shimmer_version = "0.5.0"
+    lottie_version = "3.4.1"
 }

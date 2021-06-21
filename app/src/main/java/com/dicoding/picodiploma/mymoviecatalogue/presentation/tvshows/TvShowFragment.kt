@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.picodiploma.mymoviecatalogue.R
 import com.dicoding.picodiploma.mymoviecatalogue.core.data.source.Resource
 import com.dicoding.picodiploma.mymoviecatalogue.databinding.FragmentTvShowsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,8 +46,6 @@ class TvShowFragment : Fragment() {
                         is Resource.Error -> {
                             showLoading(false)
                             fragmentTvShowBinding.empty.root.visibility = View.VISIBLE
-                            fragmentTvShowBinding.empty.tvError.text =
-                                tvShow.message ?: getString(R.string.error)
                         }
                     }
                 }
